@@ -7,7 +7,8 @@ export async function fetchServerDataset(): Promise<{
 }> {
   try {
     const res = await fetch('/api/tenders');
-    if (!res.ok) {
+    const contentType = res.headers.get('content-type') || '';
+    if (!res.ok || !contentType.includes('application/json')) {
       return { success: false, records: [], meta: null };
     }
     const data = await res.json();
@@ -34,16 +35,23 @@ export async function syncDatasetToServer(
       },
       body: JSON.stringify({ records, meta }),
     });
+    const contentType = res.headers.get('content-type') || '';
+    if (!res.ok || !contentType.includes('application/json')) {
+      return {
+        success: false,
+        message: 'Đang chạy trên máy chủ tĩnh (không có backend đồng bộ), dữ liệu được lưu cục bộ trên trình duyệt.',
+      };
+    }
     const data = await res.json();
     return {
       success: Boolean(data.success),
       message: data.message,
     };
   } catch (err: any) {
-    console.error('Failed to sync dataset to server:', err);
+    console.warn('Failed to sync dataset to server:', err);
     return {
       success: false,
-      message: err.message || 'Lỗi kết nối máy chủ',
+      message: 'Không kết nối được máy chủ đồng bộ, dữ liệu vẫn được lưu cục bộ trên trình duyệt.',
     };
   }
 }
