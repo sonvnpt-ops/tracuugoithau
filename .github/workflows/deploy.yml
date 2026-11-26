@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Prepare public dataset
+        run: node scripts/prepare-public-data.mjs
+
       - name: Build static site
         env:
           VITE_STATIC_HOSTING: 'true'

@@ -133,4 +133,5 @@ export interface DatasetMeta {
   servicesCount: number;
   personsCount: number;
   syncedToServer?: boolean;
+  isPublicStatic?: boolean;
 }

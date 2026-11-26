@@ -1,4 +1,5 @@
 import { TenderRecord, DatasetMeta } from '../types/tender';
+import { buildNormalizedRecord } from './excelImporter';
 
 export function isStaticHosting(): boolean {
   if (import.meta.env.VITE_STATIC_HOSTING === 'true') {
@@ -11,6 +12,103 @@ export function isStaticHosting(): boolean {
     }
   }
   return false;
+}
+
+export async function fetchPublicDataset(): Promise<{
+  success: boolean;
+  records: TenderRecord[];
+  meta: DatasetMeta | null;
+}> {
+  try {
+    const res = await fetch('./data/dataset.json', { cache: 'no-cache' });
+    const contentType = res.headers.get('content-type') || '';
+    if (!res.ok || !contentType.includes('application/json')) {
+      return { success: false, records: [], meta: null };
+    }
+    const data = await res.json();
+    if (!data || !Array.isArray(data.records) || data.records.length === 0) {
+      return { success: false, records: [], meta: null };
+    }
+
+    const hydratedRecords: TenderRecord[] = data.records.map((r: TenderRecord) =>
+      r._normalized ? r : buildNormalizedRecord(r)
+    );
+
+    const meta: DatasetMeta = {
+      sourceName: data.meta?.sourceName || 'Dữ liệu công khai',
+      loadedAt: data.meta?.loadedAt || new Date().toISOString(),
+      isDemo: false,
+      totalRecords: hydratedRecords.length,
+      goodsCount:
+        data.meta?.goodsCount ??
+        hydratedRecords.filter((r) => r.goods_info_str?.trim()).length,
+      servicesCount:
+        data.meta?.servicesCount ??
+        hydratedRecords.filter((r) => r.services_info_str?.trim()).length,
+      personsCount:
+        data.meta?.personsCount ??
+        hydratedRecords.filter((r) => r.persons_info_str?.trim()).length,
+      syncedToServer: false,
+      isPublicStatic: true,
+    };
+
+    return {
+      success: true,
+      records: hydratedRecords,
+      meta,
+    };
+  } catch (err) {
+    console.warn('Could not fetch public static dataset:', err);
+    return { success: false, records: [], meta: null };
+  }
+}
+
+export function exportPublicDatasetJson(
+  records: TenderRecord[],
+  meta: DatasetMeta
+): void {
+  const compactRecords = records.map((r) => {
+    const { _normalized, raw_data, ...rest } = r;
+    let compactRaw: Record<string, any> | undefined;
+    if (raw_data) {
+      const {
+        goods_info_str: _g,
+        services_info_str: _s,
+        persons_info_str: _p,
+        ...otherRaw
+      } = raw_data;
+      if (Object.keys(otherRaw).length > 0) {
+        compactRaw = otherRaw;
+      }
+    }
+    return compactRaw ? { ...rest, raw_data: compactRaw } : rest;
+  });
+
+  const payload = {
+    records: compactRecords,
+    meta: {
+      sourceName: meta.sourceName,
+      loadedAt: meta.loadedAt || new Date().toISOString(),
+      isDemo: false,
+      totalRecords: compactRecords.length,
+      goodsCount: meta.goodsCount,
+      servicesCount: meta.servicesCount,
+      personsCount: meta.personsCount,
+      isPublicStatic: true,
+    },
+  };
+
+  const blob = new Blob([JSON.stringify(payload)], {
+    type: 'application/json;charset=utf-8',
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'dataset.json');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
 
 export async function fetchServerDataset(): Promise<{

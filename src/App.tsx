@@ -17,6 +17,8 @@ import {
 } from './utils/dbStorage';
 import {
   fetchServerDataset,
+  fetchPublicDataset,
+  exportPublicDatasetJson,
   syncDatasetToServer,
   clearServerDataset,
   isStaticHosting,
@@ -91,12 +93,12 @@ export default function App() {
   // Floating scroll-to-top button
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // 1. Initial Load: Server-first multi-device sync, then IndexedDB, then fallback to demo
+  // 1. Initial Load: Server-first -> Public static dataset.json / IndexedDB -> Demo
   useEffect(() => {
     async function init() {
       setIsInitializing(true);
       try {
-        // Step 1: Check server dataset first (so phone gets data immediately from server!)
+        // Step 1: Check server dataset first (Express backend mode)
         const serverData = await fetchServerDataset();
         if (serverData.success && serverData.records.length > 0 && serverData.meta) {
           console.log(`[Init] Loaded ${serverData.records.length} records from server!`);
@@ -106,19 +108,61 @@ export default function App() {
           };
           setRecords(serverData.records);
           setMeta(metaWithSync);
-          // Cache in local IndexedDB for lightning fast local search
           await saveDatasetToIndexedDB(serverData.records, metaWithSync);
           return;
         }
 
-        // Step 2: Check local IndexedDB
-        const cached = await loadDatasetFromIndexedDB();
-        if (cached && cached.records.length > 0 && cached.meta) {
+        // Step 2: Check local IndexedDB & public static dataset.json (GitHub Pages)
+        const [cached, publicData] = await Promise.all([
+          loadDatasetFromIndexedDB(),
+          fetchPublicDataset(),
+        ]);
+
+        const hasCached = Boolean(cached && cached.records.length > 0 && cached.meta);
+        const hasPublic = Boolean(
+          publicData.success && publicData.records.length > 0 && publicData.meta
+        );
+
+        if (hasPublic && publicData.meta) {
+          const cachedMeta = cached?.meta;
+          const isCachedCustomNewer =
+            hasCached &&
+            cachedMeta &&
+            !cachedMeta.isDemo &&
+            !cachedMeta.isPublicStatic &&
+            cachedMeta.loadedAt > publicData.meta.loadedAt;
+
+          if (isCachedCustomNewer && cached) {
+            setRecords(cached.records);
+            setMeta(cachedMeta!);
+            return;
+          }
+
+          // Reuse cached public static dataset if identical version to avoid re-indexing
+          const isSamePublicVersion =
+            hasCached &&
+            cachedMeta?.isPublicStatic &&
+            cachedMeta.loadedAt === publicData.meta.loadedAt &&
+            cachedMeta.totalRecords === publicData.meta.totalRecords;
+
+          if (isSamePublicVersion && cached) {
+            setRecords(cached.records);
+            setMeta(cachedMeta!);
+            return;
+          }
+
+          setRecords(publicData.records);
+          setMeta(publicData.meta);
+          await saveDatasetToIndexedDB(publicData.records, publicData.meta);
+          return;
+        }
+
+        if (hasCached && cached && cached.meta) {
           setRecords(cached.records);
           setMeta(cached.meta);
 
           // If this device has real data but server didn't, auto-sync it to server so phone can access!
-          if (!cached.meta.isDemo) {
+          if (!cached.meta.isDemo && !isStaticHosting()) {
             setIsSyncing(true);
             syncDatasetToServer(cached.records, cached.meta).then((res) => {
               setIsSyncing(false);
@@ -277,10 +321,10 @@ export default function App() {
     // 2. If static hosting (e.g. GitHub Pages), finish cleanly with local storage message
     if (isStaticHosting()) {
       setToastMsg({
-        text: `Đã nạp thành công ${importedRecords.length} gói thầu (lưu cục bộ trên trình duyệt)!`,
+        text: `Đã nạp ${importedRecords.length} gói thầu trên trình duyệt này. Để mọi người cùng thấy, vào "Xuất" → tải "dataset.json" và đưa lên public/data/dataset.json trên GitHub.`,
         type: 'success',
       });
-      setTimeout(() => setToastMsg(null), 5000);
+      setTimeout(() => setToastMsg(null), 8000);
       return;
     }
 
@@ -369,7 +413,23 @@ export default function App() {
   };
 
   const handleResetToDemo = async () => {
-    if (confirm('Bạn có muốn nạp lại bộ dữ liệu mẫu chuẩn?')) {
+    if (confirm('Bạn có muốn quay lại bộ dữ liệu mặc định của trang?')) {
+      await clearIndexedDB();
+      await clearServerDataset();
+
+      const publicData = await fetchPublicDataset();
+      if (publicData.success && publicData.records.length > 0 && publicData.meta) {
+        setRecords(publicData.records);
+        setMeta(publicData.meta);
+        setQuery('');
+        setScope('all');
+        setCurrentPage(1);
+        await saveDatasetToIndexedDB(publicData.records, publicData.meta);
+        setToastMsg({ text: 'Đã khôi phục bộ dữ liệu công khai của trang.', type: 'info' });
+        setTimeout(() => setToastMsg(null), 3000);
+        return;
+      }
+
       const samples = getSampleDataset();
       let gCount = 0;
       let sCount = 0;
@@ -394,8 +454,6 @@ export default function App() {
       setQuery('');
       setScope('all');
       setCurrentPage(1);
-      await clearIndexedDB();
-      await clearServerDataset();
       setToastMsg({ text: 'Đã quay về chế độ dữ liệu mẫu.', type: 'info' });
       setTimeout(() => setToastMsg(null), 3000);
     }
@@ -766,6 +824,9 @@ export default function App() {
         onClose={() => setIsExportOpen(false)}
         results={searchResults}
         query={query}
+        isDemo={meta.isDemo}
+        totalRecords={records.length}
+        onExportPublicJson={() => exportPublicDatasetJson(records, meta)}
       />
     </div>
   );

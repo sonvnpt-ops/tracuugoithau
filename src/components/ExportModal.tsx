@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
-import { X, Download, FileSpreadsheet, FileJson, Check } from 'lucide-react';
+import { X, Download, FileSpreadsheet, FileJson, Check, Globe } from 'lucide-react';
 import { SearchResultItem } from '../types/tender';
 
 interface ExportModalProps {
@@ -8,6 +8,9 @@ interface ExportModalProps {
   onClose: () => void;
   results: SearchResultItem[];
   query: string;
+  isDemo?: boolean;
+  totalRecords?: number;
+  onExportPublicJson?: () => void;
 }
 
 export const ExportModal: React.FC<ExportModalProps> = ({
@@ -15,6 +18,9 @@ export const ExportModal: React.FC<ExportModalProps> = ({
   onClose,
   results,
   query,
+  isDemo = true,
+  totalRecords = 0,
+  onExportPublicJson,
 }) => {
   const [exportType, setExportType] = useState<'xlsx' | 'csv' | 'json'>('xlsx');
   const [isExporting, setIsExporting] = useState(false);
@@ -99,7 +105,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+            className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -119,7 +125,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               <button
                 type="button"
                 onClick={() => setExportType('xlsx')}
-                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 transition-all ${
+                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                   exportType === 'xlsx'
                     ? 'border-blue-600 bg-blue-50 text-blue-800 font-bold shadow-xs'
                     : 'border-slate-200 hover:bg-slate-50 text-slate-700'
@@ -132,7 +138,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               <button
                 type="button"
                 onClick={() => setExportType('csv')}
-                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 transition-all ${
+                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                   exportType === 'csv'
                     ? 'border-blue-600 bg-blue-50 text-blue-800 font-bold shadow-xs'
                     : 'border-slate-200 hover:bg-slate-50 text-slate-700'
@@ -145,7 +151,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               <button
                 type="button"
                 onClick={() => setExportType('json')}
-                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 transition-all ${
+                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                   exportType === 'json'
                     ? 'border-blue-600 bg-blue-50 text-blue-800 font-bold shadow-xs'
                     : 'border-slate-200 hover:bg-slate-50 text-slate-700'
@@ -156,13 +162,36 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               </button>
             </div>
           </div>
+
+          {!isDemo && onExportPublicJson && (
+            <div className="bg-blue-50/80 border border-blue-200 rounded-xl p-3.5 space-y-2">
+              <div className="flex items-center gap-1.5 font-bold text-blue-900">
+                <Globe className="w-4 h-4 text-blue-600 shrink-0" />
+                <span>Công khai dữ liệu lên GitHub Pages ({totalRecords.toLocaleString('vi-VN')} gói)</span>
+              </div>
+              <p className="text-[11px] text-slate-600 leading-relaxed">
+                Tải file <code className="bg-white px-1 py-0.5 rounded border border-blue-200 font-mono">dataset.json</code> và đưa vào <code className="bg-white px-1 py-0.5 rounded border border-blue-200 font-mono">public/data/dataset.json</code> trên GitHub để mọi người truy cập đều thấy dữ liệu bạn đã nạp.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  onExportPublicJson();
+                  onClose();
+                }}
+                className="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold transition-colors cursor-pointer"
+              >
+                <Download className="w-3.5 h-3.5 text-blue-400" />
+                <span>Tải dataset.json công khai</span>
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="bg-slate-50 px-5 py-3 border-t border-slate-200 flex items-center justify-end gap-2 text-xs">
           <button
             type="button"
             onClick={onClose}
-            className="px-3 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-medium"
+            className="px-3 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-medium cursor-pointer"
           >
             Hủy
           </button>
@@ -171,7 +200,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
             type="button"
             onClick={handleExport}
             disabled={isExporting}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs cursor-pointer"
           >
             {success ? (
               <>
