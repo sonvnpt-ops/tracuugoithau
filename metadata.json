@@ -1,0 +1,6 @@
+{
+  "name": "Tra Cứu Thông Tin Nhà Thầu",
+  "description": "Công cụ tra cứu nhanh thông tin hàng hóa, dịch vụ và nhân sự trong dữ liệu gói thầu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
