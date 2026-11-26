@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
                   )}
 
                   {/* Cloud Multi-device status */}
-                  {!meta.isDemo && (
+                  {!meta.isDemo && onSyncToServer && (
                     <span
                       className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex items-center gap-1 border ${
                         meta.syncedToServer

@@ -30,6 +30,8 @@ jobs:
         run: npm install
 
       - name: Build static site
+        env:
+          VITE_STATIC_HOSTING: 'true'
         run: npm run build
 
       - name: Setup Pages

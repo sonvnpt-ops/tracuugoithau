@@ -19,6 +19,7 @@ import {
   fetchServerDataset,
   syncDatasetToServer,
   clearServerDataset,
+  isStaticHosting,
 } from './utils/apiSync';
 
 import { Header } from './components/Header';
@@ -273,7 +274,17 @@ export default function App() {
       console.warn('Could not save to IndexedDB:', e);
     }
 
-    // 2. Automatically sync to backend server disk so phone & all other devices get it!
+    // 2. If static hosting (e.g. GitHub Pages), finish cleanly with local storage message
+    if (isStaticHosting()) {
+      setToastMsg({
+        text: `Đã nạp thành công ${importedRecords.length} gói thầu (lưu cục bộ trên trình duyệt)!`,
+        type: 'success',
+      });
+      setTimeout(() => setToastMsg(null), 5000);
+      return;
+    }
+
+    // 3. Automatically sync to backend server disk so phone & all other devices get it!
     setIsSyncing(true);
     setToastMsg({ text: 'Đang lưu và đồng bộ lên máy chủ...', type: 'info' });
 
@@ -443,11 +454,11 @@ export default function App() {
         onOpenExport={() => setIsExportOpen(true)}
         totalFilteredCount={searchResults.length}
         isSyncing={isSyncing}
-        onSyncToServer={handleManualSyncToServer}
+        onSyncToServer={isStaticHosting() ? undefined : handleManualSyncToServer}
       />
 
       {/* Demo Mode Device Guidance Banner */}
-      {meta.isDemo && (
+      {meta.isDemo && !isStaticHosting() && (
         <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white px-3 sm:px-6 py-2.5 text-xs border-b border-indigo-800/80 shadow-inner">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div className="flex items-start sm:items-center gap-2">

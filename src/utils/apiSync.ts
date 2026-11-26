@@ -1,10 +1,27 @@
 import { TenderRecord, DatasetMeta } from '../types/tender';
 
+export function isStaticHosting(): boolean {
+  if (import.meta.env.VITE_STATIC_HOSTING === 'true') {
+    return true;
+  }
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host.endsWith('.github.io') || window.location.protocol === 'file:') {
+      return true;
+    }
+  }
+  return false;
+}
+
 export async function fetchServerDataset(): Promise<{
   success: boolean;
   records: TenderRecord[];
   meta: DatasetMeta | null;
 }> {
+  if (isStaticHosting()) {
+    return { success: false, records: [], meta: null };
+  }
+
   try {
     const res = await fetch('/api/tenders');
     const contentType = res.headers.get('content-type') || '';
@@ -27,6 +44,13 @@ export async function syncDatasetToServer(
   records: TenderRecord[],
   meta: DatasetMeta
 ): Promise<{ success: boolean; message?: string }> {
+  if (isStaticHosting()) {
+    return {
+      success: false,
+      message: 'Đang chạy trên GitHub Pages (web tĩnh), dữ liệu đã được lưu cục bộ trên trình duyệt.',
+    };
+  }
+
   try {
     const res = await fetch('/api/tenders/sync', {
       method: 'POST',
@@ -57,6 +81,10 @@ export async function syncDatasetToServer(
 }
 
 export async function clearServerDataset(): Promise<void> {
+  if (isStaticHosting()) {
+    return;
+  }
+
   try {
     await fetch('/api/tenders', { method: 'DELETE' });
   } catch (err) {
