@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
                   <h1 className="text-base sm:text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
-                    Tra Cứu Thông Tin Nhà Thầu
+                    Tra Cứu Thông Tin Gói Thầu
                   </h1>
                   {meta.isDemo ? (
                     <span className="text-[11px] font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full">
