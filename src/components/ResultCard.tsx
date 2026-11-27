@@ -315,7 +315,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                       {visibleGoods.map((g) => (
                         <div
                           key={g.originalIndex}
-                          className={`p-2.5 rounded-xl border transition-all text-sm ${
+                          className={`p-2.5 rounded-xl border transition-all text-base ${
                             g.isMatched
                               ? 'bg-emerald-50/90 border-emerald-300 ring-1 ring-emerald-300/60 shadow-2xs'
                               : 'bg-white border-slate-200/90 hover:border-slate-300 text-slate-700'
@@ -324,7 +324,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                           <div className="flex items-start justify-between gap-2">
                             <div className="font-semibold text-slate-900 leading-snug">
                               <span
-                                className={`inline-block mr-1.5 font-mono text-xs font-bold ${
+                                className={`inline-block mr-1.5 font-mono text-sm font-bold ${
                                   g.isMatched ? 'text-emerald-800' : 'text-slate-400'
                                 }`}
                               >
@@ -337,7 +337,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             </div>
 
                             {g.isMatched && (
-                              <span className="inline-flex items-center gap-0.5 text-[11px] font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
+                              <span className="inline-flex items-center gap-0.5 text-xs font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
                                 <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                                 <span>Khớp</span>
                               </span>
@@ -345,7 +345,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                           </div>
 
                           {/* Attributes: Price, Quantity, Unit, Origin */}
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-xs">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-sm">
                             {g.price && (
                               <div className="inline-flex items-center gap-1 font-mono font-bold text-emerald-900 bg-emerald-100/90 px-2 py-0.5 rounded border border-emerald-300 shadow-2xs">
                                 <Coins className="w-3 h-3 text-emerald-600" />
@@ -462,7 +462,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                       {visibleServices.map((s) => (
                         <div
                           key={s.originalIndex}
-                          className={`p-2.5 rounded-xl border transition-all text-sm ${
+                          className={`p-2.5 rounded-xl border transition-all text-base ${
                             s.isMatched
                               ? 'bg-indigo-50/90 border-indigo-300 ring-1 ring-indigo-300/60 shadow-2xs'
                               : 'bg-white border-slate-200/90 hover:border-slate-300 text-slate-700'
@@ -471,7 +471,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                           <div className="flex items-start justify-between gap-2">
                             <div className="font-semibold text-slate-900 leading-snug">
                               <span
-                                className={`inline-block mr-1.5 font-mono text-xs font-bold ${
+                                className={`inline-block mr-1.5 font-mono text-sm font-bold ${
                                   s.isMatched ? 'text-indigo-800' : 'text-slate-400'
                                 }`}
                               >
@@ -484,14 +484,14 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             </div>
 
                             {s.isMatched && (
-                              <span className="inline-flex items-center gap-0.5 text-[11px] font-bold text-indigo-800 bg-indigo-100/90 border border-indigo-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
+                              <span className="inline-flex items-center gap-0.5 text-xs font-bold text-indigo-800 bg-indigo-100/90 border border-indigo-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
                                 <CheckCircle2 className="w-3 h-3 text-indigo-600" />
                                 <span>Khớp</span>
                               </span>
                             )}
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-xs">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-sm">
                             {s.price && (
                               <div className="inline-flex items-center gap-1 font-mono font-bold text-indigo-900 bg-indigo-100/90 px-2 py-0.5 rounded border border-indigo-300 shadow-2xs">
                                 <Coins className="w-3 h-3 text-indigo-600" />
@@ -563,15 +563,15 @@ export const ResultCard: React.FC<ResultCardProps> = ({
               return (
                 <div
                   key={idx}
-                  className="text-sm bg-slate-50/90 rounded-lg p-2.5 border border-slate-200/70"
+                  className="text-base bg-slate-50/90 rounded-lg p-2.5 border border-slate-200/70"
                 >
                   <div className="flex items-center gap-1.5 mb-1">
                     <span
-                      className={`text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${badgeColor}`}
+                      className={`text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${badgeColor}`}
                     >
                       {snip.label}
                     </span>
-                    <span className="text-xs text-slate-500">
+                    <span className="text-sm text-slate-500">
                       Trích đoạn khớp ({snip.matchedTerms.join(', ')})
                     </span>
                   </div>
