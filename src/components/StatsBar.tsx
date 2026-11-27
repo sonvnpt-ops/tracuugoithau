@@ -19,7 +19,7 @@ export const StatsBar: React.FC<StatsBarProps> = ({
   matchCounts,
 }) => {
   return (
-    <div className="bg-slate-100/80 border-b border-slate-200/80 px-3 sm:px-6 py-2 text-xs">
+    <div className="bg-slate-100/80 border-b border-slate-200/80 px-3 sm:px-6 py-2 text-sm">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-1.5">
         {/* Left: Search matching breakdown or overall database stats */}
         <div className="flex items-center gap-2 flex-wrap">
@@ -80,7 +80,7 @@ export const StatsBar: React.FC<StatsBarProps> = ({
         </div>
 
         {/* Right: Storage & source status */}
-        <div className="text-[11px] text-slate-500 flex items-center gap-2">
+        <div className="text-xs text-slate-500 flex items-center gap-2">
           <span>{meta.sourceName}</span>
           <span className="text-slate-300">•</span>
           <span>Nạp lúc: {new Date(meta.loadedAt).toLocaleDateString('vi-VN')}</span>

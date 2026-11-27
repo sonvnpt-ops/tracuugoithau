@@ -101,7 +101,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         <div className="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Download className="w-4 h-4 text-blue-400" />
-            <h3 className="font-bold text-sm sm:text-base">Xuất kết quả tìm kiếm</h3>
+            <h3 className="font-bold text-base sm:text-lg">Xuất kết quả tìm kiếm</h3>
           </div>
           <button
             onClick={onClose}
@@ -111,14 +111,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           </button>
         </div>
 
-        <div className="p-5 space-y-4 text-xs">
+        <div className="p-5 space-y-4 text-sm">
           <p className="text-slate-600">
             Xuất <strong className="text-slate-900">{results.length} gói thầu</strong> đang hiển thị
             theo bộ lọc và từ khóa hiện tại.
           </p>
 
           <div className="space-y-2">
-            <label className="font-semibold text-slate-700 block uppercase tracking-wide text-[11px]">
+            <label className="font-semibold text-slate-700 block uppercase tracking-wide text-xs">
               Chọn định dạng xuất
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -169,7 +169,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 <Globe className="w-4 h-4 text-blue-600 shrink-0" />
                 <span>Công khai dữ liệu lên GitHub Pages ({totalRecords.toLocaleString('vi-VN')} gói)</span>
               </div>
-              <p className="text-[11px] text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Tải file <code className="bg-white px-1 py-0.5 rounded border border-blue-200 font-mono">dataset.json</code> và đưa vào <code className="bg-white px-1 py-0.5 rounded border border-blue-200 font-mono">public/data/dataset.json</code> trên GitHub để mọi người truy cập đều thấy dữ liệu bạn đã nạp.
               </p>
               <button
@@ -187,7 +187,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           )}
         </div>
 
-        <div className="bg-slate-50 px-5 py-3 border-t border-slate-200 flex items-center justify-end gap-2 text-xs">
+        <div className="bg-slate-50 px-5 py-3 border-t border-slate-200 flex items-center justify-end gap-2 text-sm">
           <button
             type="button"
             onClick={onClose}

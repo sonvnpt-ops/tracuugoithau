@@ -68,7 +68,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
         <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
           <div className="flex items-center gap-2">
             <Filter className="w-5 h-5 text-blue-600" />
-            <h2 className="text-base font-bold text-slate-900">Bộ lọc nâng cao</h2>
+            <h2 className="text-lg font-bold text-slate-900">Bộ lọc nâng cao</h2>
           </div>
           <button
             onClick={onClose}
@@ -79,10 +79,10 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
         </div>
 
         {/* Scrollable filter form body */}
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 text-sm">
+        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 text-base">
           {/* Scope selection */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wide">
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5 uppercase tracking-wide">
               Trường dữ liệu tra cứu
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -98,7 +98,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                   onClick={() =>
                     setLocalFilters({ ...localFilters, scope: opt.id as SearchScope })
                   }
-                  className={`py-2 px-3 text-xs font-medium rounded-lg border text-center transition-all ${
+                  className={`py-2 px-3 text-sm font-medium rounded-lg border text-center transition-all ${
                     localFilters.scope === opt.id
                       ? 'bg-blue-50 border-blue-600 text-blue-700 font-bold shadow-xs'
                       : 'border-slate-200 text-slate-600 hover:bg-slate-50'
@@ -112,11 +112,11 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
 
           {/* Existence checkboxes */}
           <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-2">
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide">
+            <label className="block text-sm font-semibold text-slate-700 uppercase tracking-wide">
               Yêu cầu có dữ liệu trong trường
             </label>
             <div className="space-y-1.5">
-              <label className="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={Boolean(localFilters.has_goods)}
@@ -128,7 +128,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 <span>Có thông tin Hàng hóa (goods_info_str)</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={Boolean(localFilters.has_services)}
@@ -140,7 +140,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 <span>Có thông tin Dịch vụ (services_info_str)</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+              <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={Boolean(localFilters.has_persons)}
@@ -156,7 +156,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
 
           {/* Plan No */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-sm font-semibold text-slate-700 mb-1">
               Mã kế hoạch LCNT (plan_no)
             </label>
             <input
@@ -166,13 +166,13 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 setLocalFilters({ ...localFilters, plan_no: e.target.value })
               }
               placeholder="VD: PL2300089123"
-              className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
           {/* Bid Name */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-sm font-semibold text-slate-700 mb-1">
               Tên gói thầu (bid_name)
             </label>
             <input
@@ -182,13 +182,13 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 setLocalFilters({ ...localFilters, bid_name: e.target.value })
               }
               placeholder="VD: Cung cấp thiết bị..."
-              className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
           {/* Procuring Entity */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-sm font-semibold text-slate-700 mb-1">
               Bên mời thầu (procuring_entity_name)
             </label>
             <input
@@ -198,13 +198,13 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 setLocalFilters({ ...localFilters, procuring_entity_name: e.target.value })
               }
               placeholder="VD: Sở Thông tin, Trung tâm..."
-              className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
           {/* Investor Name */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-sm font-semibold text-slate-700 mb-1">
               Chủ đầu tư / Nhà đầu tư (investor_name)
             </label>
             <input
@@ -214,14 +214,14 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 setLocalFilters({ ...localFilters, investor_name: e.target.value })
               }
               placeholder="VD: Ủy ban Nhân dân, Tập đoàn..."
-              className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
           {/* Invest Field */}
           {availableOptions.investFields.length > 0 && (
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-sm font-semibold text-slate-700 mb-1">
                 Lĩnh vực đầu tư (invest_field)
               </label>
               <select
@@ -229,7 +229,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 onChange={(e) =>
                   setLocalFilters({ ...localFilters, invest_field: e.target.value })
                 }
-                className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">-- Tất cả lĩnh vực --</option>
                 {availableOptions.investFields.map((fld) => (
@@ -244,7 +244,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
           {/* Contract Type */}
           {availableOptions.contractTypes.length > 0 && (
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-sm font-semibold text-slate-700 mb-1">
                 Loại hợp đồng (contract_type)
               </label>
               <select
@@ -252,7 +252,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
                 onChange={(e) =>
                   setLocalFilters({ ...localFilters, contract_type: e.target.value })
                 }
-                className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">-- Tất cả loại hợp đồng --</option>
                 {availableOptions.contractTypes.map((ct) => (
@@ -266,30 +266,30 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
 
           {/* Date range */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-sm font-semibold text-slate-700 mb-1">
               Thời gian công bố (original_public_date)
             </label>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <span className="text-[11px] text-slate-500">Từ ngày:</span>
+                <span className="text-xs text-slate-500">Từ ngày:</span>
                 <input
                   type="date"
                   value={localFilters.date_from || ''}
                   onChange={(e) =>
                     setLocalFilters({ ...localFilters, date_from: e.target.value })
                   }
-                  className="w-full px-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none"
+                  className="w-full px-2 py-1.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none"
                 />
               </div>
               <div>
-                <span className="text-[11px] text-slate-500">Đến ngày:</span>
+                <span className="text-xs text-slate-500">Đến ngày:</span>
                 <input
                   type="date"
                   value={localFilters.date_to || ''}
                   onChange={(e) =>
                     setLocalFilters({ ...localFilters, date_to: e.target.value })
                   }
-                  className="w-full px-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none"
+                  className="w-full px-2 py-1.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none"
                 />
               </div>
             </div>
@@ -301,7 +301,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
           <button
             type="button"
             onClick={handleReset}
-            className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 font-medium text-xs transition-colors flex-1 cursor-pointer"
+            className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 font-medium text-sm transition-colors flex-1 cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Đặt lại</span>
@@ -310,7 +310,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({
           <button
             type="button"
             onClick={handleApply}
-            className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs transition-colors flex-1 shadow-xs cursor-pointer"
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-colors flex-1 shadow-xs cursor-pointer"
           >
             <Check className="w-3.5 h-3.5" />
             <span>Áp dụng bộ lọc</span>

@@ -95,8 +95,8 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
               <FileSpreadsheet className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-sm sm:text-base">Nạp dữ liệu từ file Excel</h3>
-              <p className="text-[11px] text-slate-400">File nguồn view_notifys_report_202611061000(1).xlsx</p>
+              <h3 className="font-bold text-base sm:text-lg">Nạp dữ liệu từ file Excel</h3>
+              <p className="text-xs text-slate-400">File nguồn view_notifys_report_202611061000(1).xlsx</p>
             </div>
           </div>
           <button
@@ -140,10 +140,10 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
               <Upload className="w-6 h-6" />
             </div>
 
-            <p className="text-sm font-semibold text-slate-800 mb-1">
+            <p className="text-base font-semibold text-slate-800 mb-1">
               Kéo & thả file Excel vào đây hoặc <span className="text-blue-600 underline">chọn từ thiết bị</span>
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-sm text-slate-500">
               Hỗ trợ file .xlsx (ví dụ: view_notifys_report_202611061000(1).xlsx)
             </p>
           </div>
@@ -152,7 +152,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
           {loading && (
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center space-y-2">
               <Loader2 className="w-6 h-6 text-blue-600 animate-spin mx-auto" />
-              <p className="text-xs font-semibold text-blue-900">{progressMsg}</p>
+              <p className="text-sm font-semibold text-blue-900">{progressMsg}</p>
               <div className="w-full bg-blue-200 h-1.5 rounded-full overflow-hidden">
                 <div
                   className="bg-blue-600 h-full transition-all duration-300"
@@ -164,7 +164,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
           {/* Error Result */}
           {importResult && !importResult.success && (
-            <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs text-rose-900 space-y-2">
+            <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 text-sm text-rose-900 space-y-2">
               <div className="flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                 <div>
@@ -187,8 +187,8 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
           {/* Success Result */}
           {importResult && importResult.success && (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-xs text-emerald-950 space-y-3">
-              <div className="flex items-center gap-2 text-emerald-800 font-bold text-sm">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-sm text-emerald-950 space-y-3">
+              <div className="flex items-center gap-2 text-emerald-800 font-bold text-base">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                 <span>Đọc file thành công!</span>
               </div>
@@ -208,21 +208,21 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                     {importResult.validRows.toLocaleString('vi-VN')} gói thầu
                   </span>
                 </div>
-                <div className="flex justify-between border-t border-slate-100 pt-1 text-[11px]">
+                <div className="flex justify-between border-t border-slate-100 pt-1 text-xs">
                   <span>Có thông tin Hàng hóa:</span>
                   <span className="font-semibold">{importResult.goodsCount.toLocaleString('vi-VN')}</span>
                 </div>
-                <div className="flex justify-between text-[11px]">
+                <div className="flex justify-between text-xs">
                   <span>Có thông tin Dịch vụ:</span>
                   <span className="font-semibold">{importResult.servicesCount.toLocaleString('vi-VN')}</span>
                 </div>
-                <div className="flex justify-between text-[11px]">
+                <div className="flex justify-between text-xs">
                   <span>Có yêu cầu Nhân sự:</span>
                   <span className="font-semibold">{importResult.personsCount.toLocaleString('vi-VN')}</span>
                 </div>
               </div>
 
-              <p className="text-[11px] text-emerald-700 flex items-center gap-1">
+              <p className="text-xs text-emerald-700 flex items-center gap-1">
                 <Database className="w-3.5 h-3.5" />
                 Dữ liệu sẽ được lưu tự động vào bộ nhớ IndexedDB của trình duyệt.
               </p>
@@ -231,7 +231,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
         </div>
 
         {/* Modal Actions */}
-        <div className="bg-slate-50 px-5 py-3.5 border-t border-slate-200 flex items-center justify-end gap-2 text-xs">
+        <div className="bg-slate-50 px-5 py-3.5 border-t border-slate-200 flex items-center justify-end gap-2 text-sm">
           <button
             type="button"
             onClick={onClose}

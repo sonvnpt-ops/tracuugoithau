@@ -169,44 +169,44 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-1.5 mb-2.5">
           <div className="flex items-center gap-1.5 flex-wrap">
             {record.plan_no && (
-              <span className="font-mono text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+              <span className="font-mono text-sm font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
                 {record.plan_no}
               </span>
             )}
 
             {/* Field Match Badges */}
             {matches.goods && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-2 py-0.5 rounded-md">
-                <Package className="w-3 h-3 text-emerald-600" />
+              <span className="inline-flex items-center gap-1 text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 px-2 py-0.5 rounded-md">
+                <Package className="w-3.5 h-3.5 text-emerald-600" />
                 Hàng hóa
               </span>
             )}
 
             {matches.services && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200/80 px-2 py-0.5 rounded-md">
-                <Wrench className="w-3 h-3 text-indigo-600" />
+              <span className="inline-flex items-center gap-1 text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200/80 px-2 py-0.5 rounded-md">
+                <Wrench className="w-3.5 h-3.5 text-indigo-600" />
                 Dịch vụ
               </span>
             )}
 
             {matches.persons && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-purple-50 text-purple-700 border border-purple-200/80 px-2 py-0.5 rounded-md">
-                <Users className="w-3 h-3 text-purple-600" />
+              <span className="inline-flex items-center gap-1 text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200/80 px-2 py-0.5 rounded-md">
+                <Users className="w-3.5 h-3.5 text-purple-600" />
                 Nhân sự
               </span>
             )}
           </div>
 
           {record.original_public_date && (
-            <span className="flex items-center gap-1 text-xs text-slate-500">
-              <Calendar className="w-3 h-3 text-slate-400" />
+            <span className="flex items-center gap-1 text-sm text-slate-500">
+              <Calendar className="w-3.5 h-3.5 text-slate-400" />
               {record.original_public_date}
             </span>
           )}
         </div>
 
         {/* Main Title: bid_name */}
-        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors leading-snug line-clamp-2 mb-2">
+        <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors leading-snug line-clamp-2 mb-2">
           <HighlightText
             text={record.bid_name || 'Gói thầu không có tên tiêu đề'}
             matchedTerms={allMatchedTerms}
@@ -214,7 +214,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         </h3>
 
         {/* Key Metadata Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1.5 gap-x-4 text-xs text-slate-600 mb-3 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1.5 gap-x-4 text-sm text-slate-600 mb-3 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
           {record.project_name && (
             <div className="flex items-start gap-1.5 col-span-1 sm:col-span-2">
               <Briefcase className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
@@ -282,21 +282,21 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                 return (
                   <div
                     key={idx}
-                    className="text-xs bg-slate-50/95 rounded-xl p-3 border border-emerald-200/90 shadow-2xs space-y-2"
+                    className="text-sm bg-slate-50/95 rounded-xl p-3 border border-emerald-200/90 shadow-2xs space-y-2"
                   >
                     {/* Header */}
                     <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-emerald-100/90 pb-2">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${badgeColor}`}
+                          className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${badgeColor}`}
                         >
                           {snip.label}
                         </span>
-                        <span className="text-[11px] font-semibold text-slate-700">
+                        <span className="text-xs font-semibold text-slate-700">
                           Danh sách hàng hóa trong hồ sơ ({goodsItems.length} mục)
                         </span>
                         {matchedGoodsCount > 0 && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-1.5 py-0.5 rounded-full">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-1.5 py-0.5 rounded-full">
                             <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                             {matchedGoodsCount} mục đáp ứng tìm kiếm
                           </span>
@@ -304,7 +304,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                       </div>
 
                       {snip.matchedTerms.length > 0 && (
-                        <span className="text-[10px] text-slate-500 italic">
+                        <span className="text-xs text-slate-500 italic">
                           Từ khóa: {snip.matchedTerms.join(', ')}
                         </span>
                       )}
@@ -315,7 +315,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                       {visibleGoods.map((g) => (
                         <div
                           key={g.originalIndex}
-                          className={`p-2.5 rounded-xl border transition-all text-xs ${
+                          className={`p-2.5 rounded-xl border transition-all text-sm ${
                             g.isMatched
                               ? 'bg-emerald-50/90 border-emerald-300 ring-1 ring-emerald-300/60 shadow-2xs'
                               : 'bg-white border-slate-200/90 hover:border-slate-300 text-slate-700'
@@ -324,7 +324,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                           <div className="flex items-start justify-between gap-2">
                             <div className="font-semibold text-slate-900 leading-snug">
                               <span
-                                className={`inline-block mr-1.5 font-mono text-[11px] font-bold ${
+                                className={`inline-block mr-1.5 font-mono text-xs font-bold ${
                                   g.isMatched ? 'text-emerald-800' : 'text-slate-400'
                                 }`}
                               >
@@ -337,7 +337,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             </div>
 
                             {g.isMatched && (
-                              <span className="inline-flex items-center gap-0.5 text-[10px] font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
+                              <span className="inline-flex items-center gap-0.5 text-[11px] font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
                                 <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                                 <span>Khớp</span>
                               </span>
@@ -345,7 +345,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                           </div>
 
                           {/* Attributes: Price, Quantity, Unit, Origin */}
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-[11px]">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-xs">
                             {g.price && (
                               <div className="inline-flex items-center gap-1 font-mono font-bold text-emerald-900 bg-emerald-100/90 px-2 py-0.5 rounded border border-emerald-300 shadow-2xs">
                                 <Coins className="w-3 h-3 text-emerald-600" />
@@ -404,7 +404,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             e.stopPropagation();
                             setShowAllGoods(!showAllGoods);
                           }}
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-100/80 hover:bg-emerald-200/90 px-3 py-1 rounded-lg border border-emerald-300 transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-100/80 hover:bg-emerald-200/90 px-3 py-1 rounded-lg border border-emerald-300 transition-colors cursor-pointer"
                         >
                           {showAllGoods ? (
                             <>
@@ -431,20 +431,20 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                 return (
                   <div
                     key={idx}
-                    className="text-xs bg-slate-50/95 rounded-xl p-3 border border-indigo-200/90 shadow-2xs space-y-2"
+                    className="text-sm bg-slate-50/95 rounded-xl p-3 border border-indigo-200/90 shadow-2xs space-y-2"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-indigo-100/90 pb-2">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${badgeColor}`}
+                          className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${badgeColor}`}
                         >
                           {snip.label}
                         </span>
-                        <span className="text-[11px] font-semibold text-slate-700">
+                        <span className="text-xs font-semibold text-slate-700">
                           Danh sách dịch vụ trong hồ sơ ({servicesItems.length} mục)
                         </span>
                         {matchedServicesCount > 0 && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-800 bg-indigo-100 border border-indigo-300 px-1.5 py-0.5 rounded-full">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-800 bg-indigo-100 border border-indigo-300 px-1.5 py-0.5 rounded-full">
                             <CheckCircle2 className="w-3 h-3 text-indigo-600" />
                             {matchedServicesCount} mục đáp ứng tìm kiếm
                           </span>
@@ -452,7 +452,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                       </div>
 
                       {snip.matchedTerms.length > 0 && (
-                        <span className="text-[10px] text-slate-500 italic">
+                        <span className="text-xs text-slate-500 italic">
                           Từ khóa: {snip.matchedTerms.join(', ')}
                         </span>
                       )}
@@ -462,7 +462,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                       {visibleServices.map((s) => (
                         <div
                           key={s.originalIndex}
-                          className={`p-2.5 rounded-xl border transition-all text-xs ${
+                          className={`p-2.5 rounded-xl border transition-all text-sm ${
                             s.isMatched
                               ? 'bg-indigo-50/90 border-indigo-300 ring-1 ring-indigo-300/60 shadow-2xs'
                               : 'bg-white border-slate-200/90 hover:border-slate-300 text-slate-700'
@@ -471,7 +471,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                           <div className="flex items-start justify-between gap-2">
                             <div className="font-semibold text-slate-900 leading-snug">
                               <span
-                                className={`inline-block mr-1.5 font-mono text-[11px] font-bold ${
+                                className={`inline-block mr-1.5 font-mono text-xs font-bold ${
                                   s.isMatched ? 'text-indigo-800' : 'text-slate-400'
                                 }`}
                               >
@@ -484,14 +484,14 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             </div>
 
                             {s.isMatched && (
-                              <span className="inline-flex items-center gap-0.5 text-[10px] font-bold text-indigo-800 bg-indigo-100/90 border border-indigo-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
+                              <span className="inline-flex items-center gap-0.5 text-[11px] font-bold text-indigo-800 bg-indigo-100/90 border border-indigo-300 px-1.5 py-0.5 rounded shrink-0 shadow-2xs">
                                 <CheckCircle2 className="w-3 h-3 text-indigo-600" />
                                 <span>Khớp</span>
                               </span>
                             )}
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-[11px]">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-2 text-xs">
                             {s.price && (
                               <div className="inline-flex items-center gap-1 font-mono font-bold text-indigo-900 bg-indigo-100/90 px-2 py-0.5 rounded border border-indigo-300 shadow-2xs">
                                 <Coins className="w-3 h-3 text-indigo-600" />
@@ -537,7 +537,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             e.stopPropagation();
                             setShowAllServices(!showAllServices);
                           }}
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-800 hover:text-indigo-950 bg-indigo-100/80 hover:bg-indigo-200/90 px-3 py-1 rounded-lg border border-indigo-300 transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-800 hover:text-indigo-950 bg-indigo-100/80 hover:bg-indigo-200/90 px-3 py-1 rounded-lg border border-indigo-300 transition-colors cursor-pointer"
                         >
                           {showAllServices ? (
                             <>
@@ -563,15 +563,15 @@ export const ResultCard: React.FC<ResultCardProps> = ({
               return (
                 <div
                   key={idx}
-                  className="text-xs bg-slate-50/90 rounded-lg p-2.5 border border-slate-200/70"
+                  className="text-sm bg-slate-50/90 rounded-lg p-2.5 border border-slate-200/70"
                 >
                   <div className="flex items-center gap-1.5 mb-1">
                     <span
-                      className={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${badgeColor}`}
+                      className={`text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${badgeColor}`}
                     >
                       {snip.label}
                     </span>
-                    <span className="text-[11px] text-slate-500">
+                    <span className="text-xs text-slate-500">
                       Trích đoạn khớp ({snip.matchedTerms.join(', ')})
                     </span>
                   </div>
@@ -586,7 +586,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
       </div>
 
       {/* Footer / Call to action */}
-      <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-slate-100 text-xs">
+      <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-slate-100 text-sm">
         <div className="text-slate-500 flex items-center gap-2">
           {record.tbmt_url && (
             <a

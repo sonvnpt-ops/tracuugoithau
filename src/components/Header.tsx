@@ -20,6 +20,9 @@ interface HeaderProps {
   totalFilteredCount: number;
   isSyncing?: boolean;
   onSyncToServer?: () => void;
+  isHidden?: boolean;
+  showSyncBanner?: boolean;
+  onToggleSyncBanner?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -30,28 +33,35 @@ export const Header: React.FC<HeaderProps> = ({
   totalFilteredCount,
   isSyncing = false,
   onSyncToServer,
+  isHidden = true,
+  showSyncBanner = false,
+  onToggleSyncBanner,
 }) => {
   return (
-    <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
+    <header
+      className={`bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md ${
+        isHidden ? 'hidden' : ''
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
           {/* Logo & Title */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-inner font-bold text-lg">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-inner font-bold text-lg shrink-0">
                 <FileSpreadsheet className="w-5 h-5" />
               </div>
               <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-base sm:text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <h1 className="text-[15px] sm:text-xl font-bold tracking-tight text-white flex items-center gap-1.5 leading-tight">
                     Tra Cứu Thông Tin Gói Thầu
                   </h1>
                   {meta.isDemo ? (
-                    <span className="text-[11px] font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full">
                       Dữ liệu mẫu
                     </span>
                   ) : (
-                    <span className="text-[11px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span className="text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                       Dữ liệu thật ({meta.totalRecords.toLocaleString('vi-VN')})
                     </span>
@@ -60,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
                   {/* Cloud Multi-device status */}
                   {!meta.isDemo && onSyncToServer && (
                     <span
-                      className={`text-[10px] font-medium px-2 py-0.5 rounded-full flex items-center gap-1 border ${
+                      className={`text-[11px] font-medium px-2 py-0.5 rounded-full flex items-center gap-1 border ${
                         meta.syncedToServer
                           ? 'bg-blue-500/20 text-blue-300 border-blue-500/30'
                           : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
@@ -76,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-400 hidden sm:block">
+                <p className="text-sm text-slate-400 hidden sm:block">
                   Tra cứu chuyên sâu trong Hàng hóa, Dịch vụ & Yêu cầu nhân sự
                 </p>
               </div>
@@ -84,6 +94,21 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Mobile quick action buttons */}
             <div className="flex sm:hidden items-center gap-1.5">
+              {meta.isDemo && onToggleSyncBanner && (
+                <button
+                  type="button"
+                  onClick={onToggleSyncBanner}
+                  aria-label="Bật/tắt hướng dẫn đồng bộ điện thoại"
+                  className={`p-2 rounded-lg border transition-colors cursor-pointer ${
+                    showSyncBanner
+                      ? 'bg-indigo-600 text-white border-indigo-500'
+                      : 'bg-slate-800 text-slate-300 border-slate-700'
+                  }`}
+                  title="Đồng bộ dữ liệu sang điện thoại"
+                >
+                  <Smartphone className="w-4 h-4" />
+                </button>
+              )}
               <button
                 onClick={onOpenUpload}
                 aria-label="Tải file Excel"
@@ -96,7 +121,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Action buttons (Desktop & Tablet) */}
-          <div className="flex items-center justify-between sm:justify-end gap-2 text-xs">
+          <div className="flex items-center justify-between sm:justify-end gap-2 text-sm">
             {/* Source info pill */}
             <div className="hidden lg:flex items-center gap-1.5 text-slate-300 bg-slate-800/80 px-2.5 py-1.5 rounded-lg border border-slate-700/60">
               <Database className="w-3.5 h-3.5 text-blue-400" />
@@ -110,6 +135,23 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             <div className="flex items-center gap-1.5 w-full sm:w-auto">
+              {/* Demo mode phone sync guidance toggle */}
+              {meta.isDemo && onToggleSyncBanner && (
+                <button
+                  type="button"
+                  onClick={onToggleSyncBanner}
+                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg border font-medium transition-colors cursor-pointer ${
+                    showSyncBanner
+                      ? 'bg-indigo-600 hover:bg-indigo-500 text-white border-indigo-500'
+                      : 'bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border-slate-700'
+                  }`}
+                  title="Hiển thị hướng dẫn đồng bộ dữ liệu sang điện thoại"
+                >
+                  <Smartphone className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="hidden sm:inline">Đồng bộ ĐT</span>
+                </button>
+              )}
+
               {/* Force sync to server button if on real data but not synced yet */}
               {!meta.isDemo && onSyncToServer && (
                 <button

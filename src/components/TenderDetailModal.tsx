@@ -119,10 +119,10 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
-              <span className="text-[11px] font-mono font-semibold text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800">
+              <span className="text-xs font-mono font-semibold text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800">
                 {record.plan_no || 'MÃ GÓI THẦU'}
               </span>
-              <h2 className="text-sm sm:text-base font-bold text-white line-clamp-1 max-w-xl mt-0.5">
+              <h2 className="text-base sm:text-lg font-bold text-white line-clamp-1 max-w-xl mt-0.5">
                 {record.bid_name || 'Chi tiết gói thầu'}
               </h2>
             </div>
@@ -137,7 +137,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
         </div>
 
         {/* Tab Navigation (Scrollable on smartphone) */}
-        <div className="bg-slate-100 border-b border-slate-200 px-4 sm:px-6 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0 text-xs font-medium">
+        <div className="bg-slate-100 border-b border-slate-200 px-4 sm:px-6 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0 text-sm font-medium">
           <button
             type="button"
             onClick={() => setActiveTab('all')}
@@ -221,12 +221,12 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
         </div>
 
         {/* Scrollable Modal Content */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 text-sm">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 text-base">
           {/* SECTION A: General Info (Shown on 'all' or default) */}
           {(activeTab === 'all' || activeTab === 'raw') && (
             <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-xs">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-                <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
+                <h3 className="font-bold text-slate-900 text-lg flex items-center gap-2">
                   <FileText className="w-4 h-4 text-blue-600" />
                   A. Thông tin chung gói thầu
                 </h3>
@@ -236,7 +236,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                     href={record.tbmt_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium underline"
+                    className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium underline"
                   >
                     <span>Mở link Muasamcong</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -244,7 +244,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6 text-xs sm:text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6 text-base">
                 <div>
                   <span className="text-slate-500 block text-xs">Tên gói thầu (bid_name):</span>
                   <span className="font-semibold text-slate-900 block mt-0.5">
@@ -406,7 +406,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                   Không có dữ liệu hàng hóa cho gói thầu này.
                 </div>
               ) : showRawText['goods'] ? (
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed select-all">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-sm text-slate-800 whitespace-pre-wrap leading-relaxed select-all">
                   <HighlightText
                     text={record.goods_info_str}
                     matchedTerms={allMatchedTerms}
@@ -417,9 +417,9 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                   {goodsItems.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl border border-emerald-100 bg-emerald-50/30 text-xs space-y-1.5"
+                      className="p-3.5 rounded-xl border border-emerald-100 bg-emerald-50/30 text-sm space-y-1.5"
                     >
-                      <div className="font-bold text-slate-900 text-sm flex items-start justify-between gap-2">
+                      <div className="font-bold text-slate-900 text-base flex items-start justify-between gap-2 flex-wrap">
                         <span>
                           <span className="text-emerald-700 mr-1.5">#{idx + 1}</span>
                           <HighlightText
@@ -429,11 +429,11 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         </span>
                         {item.price && (
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-mono font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-300 shrink-0 flex items-center gap-1 text-xs">
+                            <span className="font-mono font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-300 shrink-0 flex items-center gap-1 text-sm">
                               <Coins className="w-3.5 h-3.5 text-slate-500" />
                               <span>Đơn giá: {formatCurrency(item.price, record.bid_price_unit || 'VND')}</span>
                             </span>
-                            <span className="font-mono font-bold text-emerald-900 bg-emerald-100/90 px-2.5 py-1 rounded-md border border-emerald-300 shrink-0 flex items-center gap-1 shadow-2xs text-xs">
+                            <span className="font-mono font-bold text-emerald-900 bg-emerald-100/90 px-2.5 py-1 rounded-md border border-emerald-300 shrink-0 flex items-center gap-1 shadow-2xs text-sm">
                               <Coins className="w-3.5 h-3.5 text-emerald-600" />
                               <span>
                                 Số tiền:{' '}
@@ -450,7 +450,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-slate-600 pt-1">
                         {item.quantity && (
                           <div>
-                            <span className="text-slate-400 block text-[11px]">Số lượng:</span>
+                            <span className="text-slate-400 block text-xs">Số lượng:</span>
                             <span className="font-medium text-slate-800">
                               <HighlightText
                                 text={cleanQuantity(item.quantity)}
@@ -461,7 +461,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         )}
                         {item.unit && (
                           <div>
-                            <span className="text-slate-400 block text-[11px]">Đơn vị tính:</span>
+                            <span className="text-slate-400 block text-xs">Đơn vị tính:</span>
                             <span className="font-medium text-slate-800">
                               <HighlightText
                                 text={item.unit}
@@ -472,7 +472,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         )}
                         {item.origin && (
                           <div className="col-span-2">
-                            <span className="text-slate-400 block text-[11px]">Nguồn gốc:</span>
+                            <span className="text-slate-400 block text-xs">Nguồn gốc:</span>
                             <span className="font-medium text-slate-800">
                               <HighlightText
                                 text={item.origin}
@@ -483,7 +483,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         )}
                       </div>
 
-                      <div className="text-[11px] text-slate-500 pt-1 border-t border-emerald-100/60 font-mono">
+                      <div className="text-xs text-slate-500 pt-1 border-t border-emerald-100/60 font-mono">
                         <HighlightText
                           text={item.rawText}
                           matchedTerms={allMatchedTerms}
@@ -552,7 +552,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                   Không có dữ liệu dịch vụ cho gói thầu này.
                 </div>
               ) : showRawText['services'] ? (
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed select-all">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-sm text-slate-800 whitespace-pre-wrap leading-relaxed select-all">
                   <HighlightText
                     text={record.services_info_str}
                     matchedTerms={allMatchedTerms}
@@ -563,9 +563,9 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                   {serviceItems.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl border border-indigo-100 bg-indigo-50/30 text-xs space-y-1.5"
+                      className="p-3.5 rounded-xl border border-indigo-100 bg-indigo-50/30 text-sm space-y-1.5"
                     >
-                      <div className="font-bold text-slate-900 text-sm flex items-start justify-between gap-2">
+                      <div className="font-bold text-slate-900 text-base flex items-start justify-between gap-2 flex-wrap">
                         <span>
                           <span className="text-indigo-700 mr-1.5">#{idx + 1}</span>
                           <HighlightText
@@ -575,11 +575,11 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         </span>
                         {item.price && (
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-mono font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-300 shrink-0 flex items-center gap-1 text-xs">
+                            <span className="font-mono font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-300 shrink-0 flex items-center gap-1 text-sm">
                               <Coins className="w-3.5 h-3.5 text-slate-500" />
                               <span>Đơn giá: {formatCurrency(item.price, record.bid_price_unit || 'VND')}</span>
                             </span>
-                            <span className="font-mono font-bold text-indigo-900 bg-indigo-100/90 px-2.5 py-1 rounded-md border border-indigo-300 shrink-0 flex items-center gap-1 shadow-2xs text-xs">
+                            <span className="font-mono font-bold text-indigo-900 bg-indigo-100/90 px-2.5 py-1 rounded-md border border-indigo-300 shrink-0 flex items-center gap-1 shadow-2xs text-sm">
                               <Coins className="w-3.5 h-3.5 text-indigo-600" />
                               <span>
                                 Số tiền:{' '}
@@ -596,7 +596,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-slate-600 pt-1">
                         {item.item && (
                           <div>
-                            <span className="text-slate-400 block text-[11px]">Hạng mục/Mục:</span>
+                            <span className="text-slate-400 block text-xs">Hạng mục/Mục:</span>
                             <span className="font-medium text-slate-800">
                               <HighlightText
                                 text={item.item}
@@ -607,7 +607,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         )}
                         {item.quantity && (
                           <div>
-                            <span className="text-slate-400 block text-[11px]">Số lượng:</span>
+                            <span className="text-slate-400 block text-xs">Số lượng:</span>
                             <span className="font-medium text-slate-800">
                               <HighlightText
                                 text={cleanQuantity(item.quantity)}
@@ -618,7 +618,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         )}
                         {item.unit && (
                           <div>
-                            <span className="text-slate-400 block text-[11px]">Đơn vị tính:</span>
+                            <span className="text-slate-400 block text-xs">Đơn vị tính:</span>
                             <span className="font-medium text-slate-800">
                               <HighlightText
                                 text={item.unit}
@@ -629,7 +629,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         )}
                       </div>
 
-                      <div className="text-[11px] text-slate-500 pt-1 border-t border-indigo-100/60 font-mono">
+                      <div className="text-xs text-slate-500 pt-1 border-t border-indigo-100/60 font-mono">
                         <HighlightText
                           text={item.rawText}
                           matchedTerms={allMatchedTerms}
@@ -698,7 +698,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                   Không có dữ liệu nhân sự cho gói thầu này.
                 </div>
               ) : showRawText['persons'] ? (
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed select-all">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-sm text-slate-800 whitespace-pre-wrap leading-relaxed select-all">
                   <HighlightText
                     text={record.persons_info_str}
                     matchedTerms={allMatchedTerms}
@@ -709,11 +709,11 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                   {personItems.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl border border-purple-200/90 bg-purple-50/30 text-xs space-y-2.5 shadow-xs"
+                      className="p-4 rounded-xl border border-purple-200/90 bg-purple-50/30 text-sm space-y-2.5 shadow-xs"
                     >
                       {/* Position Title */}
                       <div className="flex items-start justify-between gap-2 border-b border-purple-100 pb-2">
-                        <div className="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-2">
+                        <div className="font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
                           <span className="w-5 h-5 rounded-full bg-purple-600 text-white text-xs flex items-center justify-center font-bold">
                             {idx + 1}
                           </span>
@@ -724,7 +724,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                         </div>
 
                         {item.quantity && (
-                          <span className="font-semibold text-purple-900 bg-purple-100 px-2 py-0.5 rounded text-xs shrink-0">
+                          <span className="font-semibold text-purple-900 bg-purple-100 px-2 py-0.5 rounded text-sm shrink-0">
                             SL: {cleanQuantity(item.quantity)}
                           </span>
                         )}
@@ -734,7 +734,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 pt-1 text-slate-700">
                         {item.yearsOfExp && (
                           <div className="bg-white p-2.5 rounded-lg border border-purple-100">
-                            <span className="text-slate-400 block text-[11px] font-medium">
+                            <span className="text-slate-400 block text-xs font-medium">
                               Số năm kinh nghiệm:
                             </span>
                             <span className="font-semibold text-slate-900">
@@ -748,7 +748,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
 
                         {item.contractCount && (
                           <div className="bg-white p-2.5 rounded-lg border border-purple-100">
-                            <span className="text-slate-400 block text-[11px] font-medium">
+                            <span className="text-slate-400 block text-xs font-medium">
                               Số hợp đồng tương tự:
                             </span>
                             <span className="font-semibold text-slate-900">
@@ -762,7 +762,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
 
                         {item.major && (
                           <div className="bg-white p-2.5 rounded-lg border border-purple-100 sm:col-span-2 md:col-span-1">
-                            <span className="text-slate-400 block text-[11px] font-medium">
+                            <span className="text-slate-400 block text-xs font-medium">
                               Chuyên ngành / Bằng cấp:
                             </span>
                             <span className="font-semibold text-slate-900">
@@ -778,10 +778,10 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                       {/* Certificates */}
                       {item.certificates && (
                         <div className="bg-amber-50/80 border border-amber-200/80 rounded-lg p-2.5 text-amber-950">
-                          <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wide block mb-0.5">
+                          <span className="text-xs font-bold text-amber-800 uppercase tracking-wide block mb-0.5">
                             Chứng chỉ & Bằng cấp yêu cầu:
                           </span>
-                          <span className="font-medium text-xs leading-relaxed">
+                          <span className="font-medium text-sm leading-relaxed">
                             <HighlightText
                               text={item.certificates}
                               matchedTerms={allMatchedTerms}
@@ -793,10 +793,10 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                       {/* Other Requirements */}
                       {item.otherRequirements && (
                         <div className="bg-white p-2.5 rounded-lg border border-purple-100 text-slate-700">
-                          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wide block mb-0.5">
+                          <span className="text-xs font-bold text-slate-500 uppercase tracking-wide block mb-0.5">
                             Yêu cầu khác / Điều kiện năng lực:
                           </span>
-                          <span className="text-xs leading-relaxed">
+                          <span className="text-sm leading-relaxed">
                             <HighlightText
                               text={item.otherRequirements}
                               matchedTerms={allMatchedTerms}
@@ -806,7 +806,7 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
                       )}
 
                       {/* Raw block preservation */}
-                      <div className="text-[11px] text-slate-500 pt-1.5 border-t border-purple-100/70 font-mono">
+                      <div className="text-xs text-slate-500 pt-1.5 border-t border-purple-100/70 font-mono">
                         <HighlightText
                           text={item.rawText}
                           matchedTerms={allMatchedTerms}
@@ -854,14 +854,14 @@ export const TenderDetailModal: React.FC<TenderDetailModalProps> = ({
 
         {/* Modal Footer */}
         <div className="bg-slate-50 px-4 sm:px-6 py-3 border-t border-slate-200 flex items-center justify-between shrink-0">
-          <div className="text-xs text-slate-500">
+          <div className="text-sm text-slate-500">
             Dữ liệu gói thầu: <span className="font-medium text-slate-700">{record.plan_no}</span>
           </div>
 
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-sm transition-colors cursor-pointer"
           >
             Đóng chi tiết
           </button>

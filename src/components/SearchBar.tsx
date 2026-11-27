@@ -27,6 +27,10 @@ interface SearchBarProps {
   onToggleFilter: () => void;
   isFilterOpen: boolean;
   activeFilterCount: number;
+  isHidden?: boolean;
+  hasVisibleHeader?: boolean;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
+  onInputFocus?: () => void;
 }
 
 const TEST_QUERIES = [
@@ -54,6 +58,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onToggleFilter,
   isFilterOpen,
   activeFilterCount,
+  isHidden = false,
+  hasVisibleHeader = false,
+  inputRef,
+  onInputFocus,
 }) => {
   // Built-in Vietnamese Telex typing engine toggle (defaults to true)
   const [useBuiltinTelex, setUseBuiltinTelex] = useState(true);
@@ -103,7 +111,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   ];
 
   return (
-    <div className="bg-white border-b border-slate-200 sticky top-[57px] sm:top-[65px] z-20 shadow-xs">
+    <div
+      className={`bg-white border-b border-slate-200 sticky z-20 shadow-xs transition-transform duration-300 ease-out will-change-transform ${
+        hasVisibleHeader ? 'top-[101px] sm:top-[74px]' : 'top-0'
+      } ${isHidden ? '-translate-y-[180%] pointer-events-none' : 'translate-y-0'}`}
+    >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3">
         {/* Main Search Input Box */}
         <div className="flex items-center gap-2">
@@ -113,10 +125,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             </div>
 
             <input
+              ref={inputRef}
               type="text"
               value={query}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              onFocus={onInputFocus}
               onCompositionStart={handleCompositionStart}
               onCompositionEnd={handleCompositionEnd}
               lang="vi"
@@ -127,7 +141,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               inputMode="search"
               title="Tìm toàn văn nội dung trong ô này (khớp nguyên cụm từ)"
               placeholder="Tìm toàn văn: quản lý dự án, đường truyền Internet, máy chủ ảo, PMP..."
-              className="w-full pl-11 pr-28 sm:pr-32 py-2.5 sm:py-3 text-sm sm:text-base bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 rounded-xl transition-all outline-none font-normal text-slate-900 placeholder:text-slate-400 shadow-inner"
+              className="w-full pl-11 pr-28 sm:pr-32 py-2.5 sm:py-3 text-base sm:text-lg bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 rounded-xl transition-all outline-none font-normal text-slate-900 placeholder:text-slate-400 shadow-inner"
             />
 
             {/* Inner input controls: Clear button, Telex switch, submit icon */}
@@ -212,7 +226,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                   key={item.key}
                   type="button"
                   onClick={() => onScopeChange(item.key)}
-                  className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition-all cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-sm font-medium shrink-0 transition-all cursor-pointer ${
                     active
                       ? 'bg-slate-900 text-white shadow-xs'
                       : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
@@ -226,7 +240,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           </div>
 
           {/* Search Mode & AND/OR operator */}
-          <div className="flex items-center gap-2 ml-auto text-xs flex-wrap justify-end">
+          <div className="flex items-center gap-2 ml-auto text-sm flex-wrap justify-end">
             {/* Mode: Toàn văn cụm từ (Khớp nguyên khối) vs Tách từng từ */}
             <div className="flex items-center gap-1">
               <span className="text-slate-500 font-medium hidden md:inline">Chế độ:</span>
@@ -234,20 +248,20 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <button
                   type="button"
                   onClick={() => onSearchModeChange('phrase')}
-                  className={`px-2 py-1 rounded-md text-[11px] font-semibold transition-colors cursor-pointer flex items-center gap-1 ${
+                  className={`px-2 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1 ${
                     searchMode === 'phrase'
                       ? 'bg-blue-600 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                   title="Tìm toàn văn: khớp nguyên vẹn cả cụm từ liên tục"
                 >
-                  <FileText className="w-3 h-3" />
+                  <FileText className="w-3.5 h-3.5" />
                   <span>Toàn văn cụm từ</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => onSearchModeChange('words')}
-                  className={`px-2 py-1 rounded-md text-[11px] font-semibold transition-colors cursor-pointer ${
+                  className={`px-2 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
                     searchMode === 'words'
                       ? 'bg-white text-blue-700 shadow-xs'
                       : 'text-slate-500 hover:text-slate-900'
@@ -266,7 +280,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <button
                   type="button"
                   onClick={() => onOperatorChange('AND')}
-                  className={`px-2 py-1 rounded-md text-[11px] font-semibold transition-colors cursor-pointer ${
+                  className={`px-2 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
                     operator === 'AND'
                       ? 'bg-white text-blue-700 shadow-xs'
                       : 'text-slate-500 hover:text-slate-900'
@@ -278,7 +292,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <button
                   type="button"
                   onClick={() => onOperatorChange('OR')}
-                  className={`px-2 py-1 rounded-md text-[11px] font-semibold transition-colors cursor-pointer ${
+                  className={`px-2 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
                     operator === 'OR'
                       ? 'bg-white text-blue-700 shadow-xs'
                       : 'text-slate-500 hover:text-slate-900'
@@ -293,14 +307,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         </div>
 
         {/* Quick test query chips - horizontal scroll on mobile */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar mt-2 pt-1 border-t border-slate-100 text-[11px]">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar mt-2 pt-1 border-t border-slate-100 text-xs">
           <span className="text-slate-400 shrink-0 font-medium">Gợi ý test:</span>
           {TEST_QUERIES.map((item, idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => handleSelectSample(item.query, item.scope)}
-              className="px-2 py-1 rounded-md bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-700 hover:border-blue-200 border border-transparent shrink-0 transition-colors cursor-pointer font-mono text-[11px]"
+              className="px-2 py-1 rounded-md bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-700 hover:border-blue-200 border border-transparent shrink-0 transition-colors cursor-pointer font-mono text-xs"
             >
               {item.label}
             </button>
